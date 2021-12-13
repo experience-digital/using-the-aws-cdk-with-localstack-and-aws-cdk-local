@@ -3,10 +3,8 @@ services:
   localstack:
     image: localstack/localstack
     ports:
-      - "53:53"
-      - "443:443"
-      - "4510-4520:4510-4520"
-      - "4566-4620:4566-4620"
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4571:4571"
       - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
     environment:
       - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY}
@@ -14,8 +12,8 @@ services:
       - DEBUG=1
       - DATA_DIR=/tmp/localstack/data
       - DOCKER_HOST=unix:///var/run/docker.sock
-      - LAMBDA_EXECUTOR=docker
-      - LAMBDA_NETWORK=bridge
+        LOCALSTACK_SERVICES=ec2
+        SERVICES=ec2
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     tmpfs:
